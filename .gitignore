@@ -1,2 +1,6 @@
 # env stuff
 /env/
+
+# don't add caching 
+/data/__pycache__
+/model/__pycache__
