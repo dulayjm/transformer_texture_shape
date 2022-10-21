@@ -1,0 +1,8 @@
+jax
+flax
+numpy
+torch
+scikit-learn
+matplotlib
+transformers
+datasets
