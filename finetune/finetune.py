@@ -3,7 +3,8 @@ sys.path.append('../')
 from argparse import ArgumentParser
 from PIL import Image
 from tqdm.auto import tqdm
-
+import wandb
+import yaml
 
 from data.dataset import DatasetWrapper
 from data.dataloader import DataloaderWrapper
@@ -33,6 +34,9 @@ class Trainer:
             # set a seed in feature
             pass
 
+    def configure_dataloaders(self):
+        pass
+
     def train_step(self):
         pass
 
@@ -60,28 +64,34 @@ class Trainer:
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument(
-        '--fold',
-        dest='fold',
-        default=0,
-        type=int,
-        help='which fold we are on'
-    )
-    parser.add_argument(
-        '--datasetname',
-        dest='datasetname',
+        '--config',
+        dest='config',
         default='tiny-imagenet',
         type=str,
-        help='dataset to use'
+        help='config file to use'
     )
     parser.add_argument(
-        '--modelname',
-        dest='modelname',
-        default='swinformer',
-        type=str,
-        help='modelname to use'
+        '--logger',
+        dest='logger',
+        default=0,
+        type=int,
+        help='bool to use wandb logger'
     )
 
     args = parser.parse_args()
+    # read in config file
+    config_file_path = args.config
+    with open(config_file_path, "r") as ymlfile:
+        cfg = yaml.load(ymlfile)
+
+    # TODO: refactor everything into the config state
+    if args.log == 1:         
+        wandb.init(
+            project="transformer_paper",
+            notes="debugging",
+            tags=["debugging", "transformer_paper"],
+            config=cfg,
+        )
 
     dataset_interface = DatasetWrapper(args.datasetname)
     dataset = dataset_interface.dataset

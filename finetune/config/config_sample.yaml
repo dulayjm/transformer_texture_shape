@@ -1,0 +1,12 @@
+model: 
+  # model name 
+  modelmame: swintransformer
+  feature_extractor: swintransformer
+  datasetname: tiny-imagenet
+
+hparams:
+  batch_size: 16
+  epochs: 5
+  lr: 0.01
+  optimizer_name: None
+  seed: None
